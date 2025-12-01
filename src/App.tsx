@@ -29,7 +29,6 @@ const App: React.FC = () => {
     return board.every(cell => cell !== null) && !checkWinner(board);
   }, [checkWinner]);
 
-  // Simplified minimax with useRef
   const minimax = useRef((
     board: BoardState, 
     depth: number, 
@@ -121,7 +120,6 @@ const App: React.FC = () => {
   };
 
   const isHumanTurn = currentPlayer === 'X' && !winner && !isDraw;
-  const isAITurn = currentPlayer === 'O' && !winner && !isDraw;
 
   const Cell: React.FC<{ value: Player; index: number }> = ({ value, index }) => (
     <button
@@ -138,65 +136,56 @@ const App: React.FC = () => {
       <div className="game-container">
         <div className="header">
           <h1>Tic Tac Toe</h1>
-          <div className="subtitle">Challenge the AI</div>
+          <div className="subtitle">Clay Micholaz Fu- 32240207</div>
+          <div className="subtitle">Jonatan Nilena Wahyudi- 32240183</div>
+          <div className="subtitle">Egner Constantin- 32240194</div>
         </div>
         
-        <div className="main-content">
-          <div className="left-panel">
-            <div className={`player-card human ${isHumanTurn ? 'active' : ''}`}>
+        <div className="game-area">
+          <div className="player-info">
+            <div className={`player-card human ${currentPlayer === 'X' && !winner && !isDraw ? 'active' : ''}`}>
               <div className="player-header">
                 <div className="player-icon">👤</div>
                 <div className="player-badge">You</div>
               </div>
               <div className="player-symbol x-symbol">X</div>
               <div className="player-status">
-                {isHumanTurn ? '🟢 Your Turn' : '⚪ Waiting'}
+                {currentPlayer === 'X' && !winner && !isDraw ? '🟢 Your Turn' : '⚪ Waiting'}
               </div>
             </div>
 
-            <div className="vs-divider">
-              <div className="vs-line"></div>
-              <div className="vs-text">VS</div>
-              <div className="vs-line"></div>
-            </div>
+            <div className="vs-text">VS</div>
 
-            <div className={`player-card ai ${isAITurn ? 'active' : ''}`}>
+            <div className={`player-card ai ${currentPlayer === 'O' && !winner && !isDraw ? 'active' : ''}`}>
               <div className="player-header">
                 <div className="player-icon">🤖</div>
                 <div className="player-badge">AI</div>
               </div>
               <div className="player-symbol o-symbol">O</div>
               <div className="player-status">
-                {isAITurn ? '🤔 Thinking...' : '⚪ Waiting'}
+                {currentPlayer === 'O' && !winner && !isDraw ? '🤔 Thinking...' : '⚪ Waiting'}
               </div>
             </div>
           </div>
 
-          <div className="right-panel">
-            <div className="game-board">
-              <div className={`game-status ${winner ? (winner === 'X' ? 'win' : 'lose') : ''}`}>
-                {getStatusMessage()}
-              </div>
-
-              <div className="board-container">
-                <div className="board">
-                  {board.map((cell, index) => (
-                    <Cell key={index} value={cell} index={index} />
-                  ))}
-                </div>
-              </div>
-
-              <button className="reset-button" onClick={resetGame}>
-                <span className="reset-icon">🔄</span>
-                New Game
-              </button>
+          <div className="game-board">
+            <div className={`game-status ${winner ? (winner === 'X' ? 'win' : 'lose') : ''}`}>
+              {getStatusMessage()}
             </div>
-          </div>
-        </div>
 
-        <div className="game-info">
-          <div className="info-card">
-            <h3>Game Info</h3>
+            <div className="board">
+              {board.map((cell, index) => (
+                <Cell key={index} value={cell} index={index} />
+              ))}
+            </div>
+
+            <button className="reset-button" onClick={resetGame}>
+              <span className="reset-icon">🔄</span>
+              New Game
+            </button>
+          </div>
+
+          <div className="game-info">
             <p>You play as <strong>X</strong>, AI plays as <strong>O</strong></p>
             <p>The AI uses <strong>Minimax algorithm</strong> with Alpha-Beta pruning</p>
             <p><em>Best you can achieve is a draw!</em></p>

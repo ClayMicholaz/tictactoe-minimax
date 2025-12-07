@@ -114,8 +114,8 @@ const App: React.FC = () => {
   };
 
   const getStatusMessage = () => {
-    if (winner) return winner === 'X' ? 'You Win! 🎉' : 'AI Wins! 🤖';
-    if (isDraw) return "It's a Draw! 🤝";
+    if (winner) return winner === 'X' ? 'You Win! 🎉' : '🤣🤣 AI Wins! 🤣🤣';
+    if (isDraw) return "🤪🤪 It's a Draw! 🤪🤪";
     return currentPlayer === 'X' ? "Your Turn" : "AI Thinking...";
   };
 
